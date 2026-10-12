@@ -1,0 +1,83 @@
+REACT.JS - DAY 1 REVISION
+
+1. React
+React is a JavaScript library used to build User Interfaces.
+
+2. SPA
+SPA = Single Page Application
+Full page reload illama UI update aagum.
+
+3. JSX
+JavaScript-la HTML-like syntax write panna use panrom.
+
+Example:
+const name = "Arun";
+<h1>Hello {name}</h1>
+
+{} = JSX-kulla JavaScript expression use panna.
+
+4. Component
+UI-ah small reusable parts-ah split pannuvom.
+
+function Profile() {
+  return <h1>Profile</h1>;
+}
+
+5. Export / Import
+
+export default Profile;
+
+import Profile from "./components/Profile";
+
+Use:
+<Profile />
+
+6. Props
+Parent component-lendhu Child component-ku data pass panna props use panrom.
+
+<Profile name="Arun" />
+
+function Profile({ name }) {
+  return <p>{name}</p>;
+}
+
+7. Props Destructuring
+
+function Product({ name, price }) {
+  return <p>{name} - {price}</p>;
+}
+
+8. Conditional Rendering
+
+stock > 0 ? "Available" : "Unavailable"
+
+9. map()
+Array data-va UI-la multiple components-ah render panna use panrom.
+
+products.map((product) => (
+  <Product
+    key={product.id}
+    name={product.name}
+  />
+))
+
+10. key
+List-la each item-ah uniquely identify panna React key use pannum.
+
+key={product.id}
+
+DAY 1 FLOW:
+
+Array
+ ↓
+map()
+ ↓
+Component
+ ↓
+Props
+ ↓
+Destructuring
+ ↓
+JSX
+ ↓
+UI
