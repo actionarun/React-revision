@@ -1,0 +1,42 @@
+What is State?
+State is data managed by a component that can change over time and cause the component to re-render.
+
+What is useState?
+useState is a React Hook used to manage state in a functional component.
+
+const [count, setCount] = useState(0);
+
+count     → current value
+setCount  → update function
+0         → initial value
+
+Props vs State:
+Props → Parent to child data
+State → Changing data managed by component
+
+Event handling:
+<button onClick={handleClick}>Click</button>
+
+Input:
+onChange={(e) => setName(e.target.value)}
+
+Array add:
+setTodos([...todos, task]);
+
+Array remove:
+setTodos(todos.filter((todo) => todo !== task));
+
+Most important Day 2 formula 🧠
+User Action
+   ↓
+Event
+   ↓
+Handler Function
+   ↓
+setState()
+   ↓
+State changes
+   ↓
+React re-render
+   ↓
+UI updates
