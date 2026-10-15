@@ -1,0 +1,364 @@
+# React.js — Day 3 Notes
+
+## 1. Previous State
+
+New state previous state-ai depend pannina functional update use pannuvom.
+
+```jsx
+const [count, setCount] = useState(0);
+
+setCount((prev) => prev + 1);
+```
+
+`prev` = previous state value.
+
+Example:
+
+```jsx
+setCount((prev) => prev + 1);
+setCount((prev) => prev + 1);
+```
+
+`0 → 1 → 2`
+
+**Interview Point:**  
+When the new state depends on the previous state, use a functional state update.
+
+---
+
+## 2. Object with useState
+
+```jsx
+const [user, setUser] = useState({
+  name: "Arun",
+  role: "Student"
+});
+```
+
+Access:
+
+```jsx
+user.name
+user.role
+```
+
+### Update One Property
+
+```jsx
+setUser({
+  ...user,
+  role: "MERN Developer"
+});
+```
+
+`...user` copies the existing properties.
+
+**Rule:** Don't modify React state directly.
+
+```jsx
+user.role = "Developer"; // ❌
+```
+
+Instead:
+
+```jsx
+setUser({
+  ...user,
+  role: "Developer"
+}); // ✅
+```
+
+---
+
+## 3. Array of Objects State
+
+```jsx
+const [products, setProducts] = useState([
+  { id: 1, name: "Laptop", price: 50000 },
+  { id: 2, name: "Phone", price: 20000 }
+]);
+```
+
+Display:
+
+```jsx
+{products.map((product) => (
+  <p key={product.id}>
+    {product.name}
+  </p>
+))}
+```
+
+---
+
+## 4. Add Object
+
+Use spread operator:
+
+```jsx
+const newProduct = {
+  id: 3,
+  name: "Watch",
+  price: 5000
+};
+
+setProducts([
+  ...products,
+  newProduct
+]);
+```
+
+### Remember
+
+```text
+ADD → spread
+```
+
+---
+
+## 5. Remove Object
+
+Use `filter()`:
+
+```jsx
+function removeProduct(id) {
+  setProducts(
+    products.filter(
+      (product) => product.id !== id
+    )
+  );
+}
+```
+
+### Remember
+
+```text
+REMOVE → filter()
+```
+
+---
+
+## 6. Update Object Inside Array
+
+Use `map()`:
+
+```jsx
+setProducts(
+  products.map((product) =>
+    product.id === 2
+      ? { ...product, price: 25000 }
+      : product
+  )
+);
+```
+
+### Remember
+
+```text
+UPDATE → map()
+```
+
+### Important Formula
+
+```text
+ADD     → spread
+REMOVE  → filter()
+UPDATE  → map()
+```
+
+---
+
+## 7. Parent → Child Communication
+
+Parent data-ai child-ku **props** moolama pass pannuvom.
+
+Parent:
+
+```jsx
+<Product
+  name={product.name}
+  price={product.price}
+/>
+```
+
+Child:
+
+```jsx
+function Product({ name, price }) {
+  return (
+    <>
+      <h2>{name}</h2>
+      <p>{price}</p>
+    </>
+  );
+}
+```
+
+### Data Flow
+
+```text
+Parent
+  ↓
+Props
+  ↓
+Child
+```
+
+React follows **one-way data flow**.
+
+**Interview Point:**  
+Data flows from parent components to child components through props.
+
+---
+
+## 8. Child → Parent Communication
+
+Parent function-ai child-ku prop-ah pass pannuvom.
+
+Parent:
+
+```jsx
+function removeStudent(id) {
+  setStudents(
+    students.filter(
+      (student) => student.id !== id
+    )
+  );
+}
+
+<Student
+  id={student.id}
+  remove={removeStudent}
+/>
+```
+
+Child:
+
+```jsx
+function Student({ id, remove }) {
+  return (
+    <button onClick={() => remove(id)}>
+      Delete
+    </button>
+  );
+}
+```
+
+### Flow
+
+```text
+Parent function
+      ↓ props
+Child
+      ↓
+Button Click
+      ↓
+Parent function called
+      ↓
+Parent state updated
+      ↓
+UI re-render
+```
+
+**Interview Point:**  
+A child component can communicate with its parent by calling a callback function passed through props.
+
+---
+
+## 9. Lifting State Up
+
+Two or more child components need the same data-na, shared state-ai closest common parent-la vaippom.
+
+```text
+           App
+       shared state
+        /       \
+       ↓         ↓
+    Child A    Child B
+```
+
+**Definition:**  
+Lifting state up means moving shared state to the closest common parent component.
+
+---
+
+## 10. React `key`
+
+List render pannumbodhu:
+
+```jsx
+<Student
+  key={student.id}
+  id={student.id}
+/>
+```
+
+`key` React internally use pannum.
+
+Child-la:
+
+```jsx
+function Student({ key }) // ❌
+```
+
+`key`-ai normal prop-ah receive panna mudiyadhu.
+
+ID child-ku venumna separate-ah:
+
+```jsx
+<Student
+  key={student.id}
+  id={student.id}
+/>
+```
+
+---
+
+# Day 3 Quick Revision
+
+```text
+Previous state
+→ setCount((prev) => prev + 1)
+
+Object update
+→ { ...user, role: "Developer" }
+
+Array Add
+→ spread
+
+Array Remove
+→ filter()
+
+Array Update
+→ map()
+
+Parent → Child
+→ props
+
+Child → Parent
+→ callback function through props
+
+Shared State
+→ Lifting State Up
+
+List Identification
+→ key
+```
+
+## Most Important Day 3 Formula
+
+```text
+              Parent
+             State
+            /     \
+       Props       Props
+         ↓           ↓
+      Child A     Child B
+         ↓
+       Event
+         ↓
+ Parent Callback Function
+         ↓
+     State Update
+         ↓
+      Re-render
