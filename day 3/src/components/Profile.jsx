@@ -9,6 +9,7 @@ function changeRole() {
   setUser({
     ...user,
     role: "MERN Developer"
+    
   });
 }
   return (
