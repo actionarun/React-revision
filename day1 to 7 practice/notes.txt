@@ -1,0 +1,40 @@
+ADD
+↓
+spread
+
+DELETE
+↓
+filter
+
+UPDATE
+↓
+map + ternary + spread
+
+Example:
+// ADD
+setProducts([...products, newProduct]);
+
+// DELETE
+setProducts(
+  products.filter((product) => product.id !== id)
+);
+
+// UPDATE
+setProducts(
+  products.map((product) =>
+    product.id === id
+      ? { ...product, price: 25000 }
+      : product
+  )
+);
+
+
+most important:
+products     = full array
+product      = one object
+
+students     = full array
+student      = one object
+
+user         = state/data
+setUser      = updater function
