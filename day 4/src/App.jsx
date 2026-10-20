@@ -1,6 +1,6 @@
 // import Userinput from "./components/Userinput"
-
-import ProfileForm from "./components/ProfileForm"
+// import ProfileForm from "./components/ProfileForm"
+import Email from "./components/Email"
 
 
 function App() {
@@ -8,7 +8,9 @@ function App() {
   return (
     <>
      {/* <Userinput /> */}
-     <ProfileForm />
+     {/* <ProfileForm /> */}
+     <Email />
+
     </>
   )
 }

@@ -5,7 +5,10 @@ function ProfileForm() {
         firstname:"",
         city:""
     })
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState({
+  firstname: "",
+  city: ""
+});
     const [success, setSuccess] = useState("")
      function handleChange(e) {
     setUser({
@@ -13,28 +16,40 @@ function ProfileForm() {
     })
 }
 function handleSubmit(e) {
-  e.preventDefault()
+  e.preventDefault();
+
   setSuccess("");
-if (user.firstname.trim() === "") {
-    setError("First name is required");
+
+  const newErrors = {
+    firstname: "",
+    city: ""
+  };
+
+  if (user.firstname.trim() === "") {
+    newErrors.firstname = "First name is required";
+  }
+
+  if (user.city.trim() === "") {
+    newErrors.city = "City is required";
+  }
+
+  if (newErrors.firstname || newErrors.city) {
+    setErrors(newErrors);
     return;
+  }
+
+  setErrors({
+    firstname: "",
+    city: ""
+  });
+
+  setSuccess("User registered successfully");
+  
+  setUser({
+    firstname: "",
+    city: ""
+  });
 }
-if (user.city.trim() === "") {
-    setError("city is required");
-    return;
-}
-
-setError("");
-
-console.log(user)
-
-setUser({
-  firstname: "",
-  city: ""
-});
-setSuccess("Form submitted successfully");
-}
-
 
   return (
     <>
@@ -60,8 +75,9 @@ setSuccess("Form submitted successfully");
 
     </form>
 
-    <p>{error}</p>
     <p>{success}</p>
+    <p>{errors.firstname}</p>
+    <p>{errors.city}</p>
    
 
 
