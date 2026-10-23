@@ -2,20 +2,36 @@ import { useEffect, useState } from "react";
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function getUsers() {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
-      );
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      setUsers(data);
+        setUsers(data);
+      } catch (error) {
+        setError("API failed");
+      } finally {
+        setLoading(false);
+      }
     }
 
-    getUsers();
+    getUsers(); // ✅ function-ku veliya
   }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
 
   return (
     <>
