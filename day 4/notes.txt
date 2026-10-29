@@ -1,0 +1,347 @@
+📘 React Day 4 — Forms & Validation
+1. Multiple Inputs — Object State
+Separate state use pannaama, multiple inputs-ai ore object-la manage pannalaam.
+const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  password: ""
+});
+
+formData.name
+formData.email
+formData.password
+
+2. Controlled Inputs
+Input value state-lendhu varum.
+<input
+  name="name"
+  value={formData.name}
+  onChange={handleChange}
+/>
+
+Email:
+<input
+  name="email"
+  value={formData.email}
+  onChange={handleChange}
+/>
+
+Remember:
+value    → State → Input
+onChange → Input → State
+
+3. Generic handleChange
+Ella inputs-kum ore function use pannalaam.
+function handleChange(e) {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value
+  });
+}
+
+Important:
+e.target.name
+→ entha field change aagudhu?
+
+e.target.value
+→ user enna type pannirukanga?
+
+Example user email input-la type panna:
+e.target.name  → "email"
+e.target.value → "arun@gmail.com"
+
+So:
+[e.target.name]: e.target.value
+
+becomes conceptually:
+email: "arun@gmail.com"
+
+4. Form Submit
+function handleSubmit(e) {
+  e.preventDefault();
+
+  console.log(formData);
+}
+
+<form onSubmit={handleSubmit}>
+  ...
+  <button type="submit">Submit</button>
+</form>
+
+Flow:
+Submit button
+    ↓
+Form submit
+    ↓
+onSubmit
+    ↓
+handleSubmit()
+
+5. preventDefault()
+Normal HTML form submit aana page refresh aagalam.
+
+Adha stop panna:
+e.preventDefault();
+
+Interview answer:
+preventDefault() prevents the browser's default form submission behavior.
+
+6. Basic Validation
+Example:
+if (formData.name.trim() === "") {
+  console.log("Name is required");
+  return;
+}
+
+trim() spaces-ai remove pannum.
+
+User:
+"     "
+
+mattum enter pannalum empty-ah consider panna help pannum.
+7. Error State
+Console-la mattum error kaattaama UI-la display pannalaam.
+const [error, setError] = useState("");
+
+Validation:
+if (formData.name.trim() === "") {
+  setError("Name is required");
+  return;
+}
+
+Display:
+<p>{error}</p>
+
+8. Separate Field Errors
+Real forms-la idhu better.
+const [errors, setErrors] = useState({
+  name: "",
+  email: "",
+  password: ""
+});
+
+Submit-la temporary errors object:
+const newErrors = {
+  name: "",
+  email: "",
+  password: ""
+};
+
+Validation:
+if (formData.name.trim() === "") {
+  newErrors.name = "Name is required";
+}
+
+if (formData.email.trim() === "") {
+  newErrors.email = "Email is required";
+}
+
+if (formData.password.trim() === "") {
+  newErrors.password = "Password is required";
+}
+
+9. Email Validation
+Basic validation:
+if (formData.email.trim() === "") {
+  newErrors.email = "Email is required";
+} else if (!formData.email.includes("@")) {
+  newErrors.email = "Enter a valid email";
+}
+
+includes("@") → @ irukka nu check pannum.
+Note: Idhu basic learning validation. Real project-la stronger email validation/library use pannalaam.
+
+10. Password Validation
+if (formData.password.trim() === "") {
+  newErrors.password = "Password is required";
+} else if (formData.password.length < 6) {
+  newErrors.password =
+    "Password must be at least 6 characters";
+}
+
+11. Errors Irundha Submit Stop
+setErrors(newErrors);
+
+if (
+  newErrors.name ||
+  newErrors.email ||
+  newErrors.password
+) {
+  return;
+}
+
+Flow:
+Validation
+    ↓
+Errors irukka?
+ ↙          ↘
+YES          NO
+ ↓            ↓
+Error UI     Success
+ ↓
+return
+
+12. Success State
+const [success, setSuccess] = useState("");
+
+Successful submission:
+setSuccess("Registration successful");
+
+Display:
+<p>{success}</p>
+
+New submit start aagumbodhu old success clear pannalaam:
+setSuccess("");
+
+13. Form Reset
+Successful submit apram:
+setFormData({
+  name: "",
+  email: "",
+  password: ""
+});
+
+Inputs automatically empty aagum.
+Yen?
+Input controlled:
+value={formData.name}
+
+State:
+name: ""
+
+aagumbodhu React re-render aagum.
+
+So input value:
+""
+
+aagidum.
+⭐ Complete Validation Pattern
+function handleSubmit(e) {
+  e.preventDefault();
+
+  setSuccess("");
+
+  const newErrors = {
+    name: "",
+    email: "",
+    password: ""
+  };
+
+  if (formData.name.trim() === "") {
+    newErrors.name = "Name is required";
+  }
+
+  if (formData.email.trim() === "") {
+    newErrors.email = "Email is required";
+  } else if (!formData.email.includes("@")) {
+    newErrors.email = "Enter a valid email";
+  }
+
+  if (formData.password.trim() === "") {
+    newErrors.password = "Password is required";
+  } else if (formData.password.length < 6) {
+    newErrors.password =
+      "Password must be at least 6 characters";
+  }
+
+  setErrors(newErrors);
+
+  if (
+    newErrors.name ||
+    newErrors.email ||
+    newErrors.password
+  ) {
+    return;
+  }
+
+  setSuccess("Registration successful");
+
+  setFormData({
+    name: "",
+    email: "",
+    password: ""
+  });
+}
+
+🧠 Day 4 Main Flow
+User types
+   ↓
+onChange
+   ↓
+handleChange
+   ↓
+setFormData
+   ↓
+State update
+
+User submits
+   ↓
+onSubmit
+   ↓
+preventDefault()
+   ↓
+Validation
+   ↓
+Error?
+   ↓
+YES → setErrors → return
+NO  → Success → Reset
+
+🎤 Day 4 Interview Questions & Answers
+1. What is a controlled input in React?
+A controlled input is an input whose value is controlled by React state.
+
+2. How do you manage multiple form inputs using one state?
+We can store all input values in an object state.
+const [formData, setFormData] = useState({
+  name: "",
+  email: ""
+});
+
+3. Why do we use name in an input?
+It helps identify which input field is being changed.
+
+4. What is e.target.name?
+It gives the name of the input that triggered the event.
+
+5. What is e.target.value?
+It gives the current value of that input.
+
+6. Why use [e.target.name]?
+It dynamically updates the property matching the input's name.
+[e.target.name]: e.target.value
+
+7. What does preventDefault() do?
+It prevents the browser's default form submission behavior.
+
+8. Why use trim() in validation?
+It removes surrounding whitespace and helps reject whitespace-only values.
+
+9. How do you display separate errors for each field?
+Store the errors in an object state.
+const [errors, setErrors] = useState({
+  name: "",
+  email: ""
+});
+
+10. How do you reset a controlled form?
+Set its state values back to their initial values.
+setFormData({
+  name: "",
+  email: "",
+  password: ""
+});
+
+⭐ Day 4 Quick Formula
+Multiple inputs → Object State
+
+Input → onChange
+Form  → onSubmit
+Submit button → type="submit"
+
+e.target.name  → Which field?
+e.target.value → What value?
+
+Validation error → setErrors
+Valid form      → Success
+After success   → Reset state
