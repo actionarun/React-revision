@@ -40,3 +40,55 @@ State changes
 React re-render
    ↓
 UI updates
+
+
+1. What is state in React?
+State is data managed by a component that can change over time and cause the component to re-render.
+
+2. What is useState?
+useState is a React Hook used to manage state in a functional component.
+
+3. What does useState return?
+
+It returns two values:
+const [count, setCount] = useState(0);
+
+count → current state
+setCount → state update function.
+
+4. Props vs State?
+Props → Data passed Parent → Child
+State → Changing data managed by component
+
+5. What is a controlled component/input?
+A controlled input is an input whose value is controlled by React state.
+
+6. What is e.target.value?
+It gives the current value of the input that triggered the event.
+
+7. Why do we use preventDefault()?
+It prevents the browser's default form submission behavior, such as page refresh.
+
+8. Why shouldn't we directly modify state?
+React state should be updated using its setter so React can correctly handle the update and re-render.
+
+9. How do you add an item to an array state?
+setSkills([...skills, newSkill]);
+
+10. How do you remove an item from an array state?
+setSkills(
+  skills.filter(skill => skill !== removeSkill)
+);
+
+⭐ Day 2 Formula
+useState     → Changing data
+onClick      → Click event
+onChange     → Input change
+e.target.value → Input value
+onSubmit     → Form submit
+preventDefault → Stop default form behavior
+
+Array:
+ADD     → spread
+DISPLAY → map
+DELETE  → filter
