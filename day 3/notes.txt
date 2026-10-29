@@ -362,3 +362,64 @@ List Identification
      State Update
          ↓
       Re-render
+🎤 Day 3 Interview Questions & Answers
+1. How do you update state based on previous state?
+setCount(prev => prev + 1);
+
+We use a functional state update when the new state depends on the previous state.
+
+2. How do you update one property in object state?
+setUser({
+  ...user,
+  role: "Developer"
+});
+
+3. Why do we use the spread operator while updating objects?
+
+It copies the existing properties so we can update only the required property without directly mutating the state.
+
+4. How do you add an object to an array state?
+setProducts([...products, newProduct]);
+
+5. How do you delete an object from array state?
+
+Using filter():
+setProducts(
+  products.filter(product => product.id !== id)
+);
+
+6. How do you update an object inside an array?
+
+Using map():
+setProducts(
+  products.map(product =>
+    product.id === id
+      ? {...product, price: 30000}
+      : product
+  )
+);
+
+7. How does data pass from parent to child?
+
+Data is passed from parent to child using props.
+
+8. How can a child communicate with its parent?
+
+A parent can pass a callback function to the child through props, and the child can call that function.
+
+9. What is one-way data flow?
+
+In React, data normally flows from parent to child through props.
+
+10. What is Lifting State Up?
+
+Lifting State Up means moving shared state to the closest common parent component.
+⭐ Day 3 Most Important Formula
+ADD    → SPREAD
+DELETE → FILTER
+UPDATE → MAP
+
+Parent → Child = Props
+Child → Parent = Callback
+
+Shared State → Lift State Up
