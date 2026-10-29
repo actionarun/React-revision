@@ -81,3 +81,44 @@ Destructuring
 JSX
  ↓
 UI
+
+
+
+🎤 Day 1 Interview Questions & Answers
+1. What is React?
+React is a JavaScript library used to build user interfaces.
+
+2. What is JSX?
+JSX is a syntax that allows us to write HTML-like code inside JavaScript.
+
+3. What is a component?
+A component is a reusable piece of UI.
+
+4. What are props?
+Props are used to pass data from a parent component to a child component.
+
+5. Can we modify props in a child component?
+No. Props are read-only.
+
+6. What is conditional rendering?
+Conditional rendering means displaying UI based on a condition.
+
+7. Why do we use map() in React?
+We use map() to render lists of data.
+
+8. Why is the key prop used?
+Key helps React uniquely identify items in a list.
+
+9. What is SPA?
+SPA stands for Single Page Application. It updates required content without reloading the entire page.
+
+10. What is the difference between parent and child components?
+Parent → Contains/calls another component
+Child  → Component rendered by the parent
+
+⭐ Day 1 Main Formula
+Component → UI
+Props     → Parent to Child
+Ternary   → Condition
+map()     → List
+key       → Unique identification
